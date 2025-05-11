@@ -2,6 +2,7 @@ package com.example.backend.entity;
 
 import com.example.backend.enums.PerformanceStatus;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -27,9 +28,12 @@ public class Performance {
     @MapsId("projectId")
     private Project project;
 
+    @Column(name = "role")
     private String role;
+    @Column(name = "specialization")
     private String specialization;
 
+    @Column(name = "status")
     @Enumerated(EnumType.STRING)
     private PerformanceStatus status;
 }
