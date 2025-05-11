@@ -2,6 +2,7 @@ package com.example.backend.entity;
 
 import java.util.List;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -20,12 +21,14 @@ public class Department {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(name = "name")
     private String name;
+    @Column(name = "category")
     private String category;
 
     @ManyToMany
     @JoinTable(
-        name = "department_participant",
+        name = "assignment",
         joinColumns = @JoinColumn(name = "department_id"),
         inverseJoinColumns = @JoinColumn(name = "user_id")
     )
