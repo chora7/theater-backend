@@ -27,6 +27,7 @@
 /home/user/Development/java/backend/src/main/java/com/example/backend/security/JwtUtil.java
 /home/user/Development/java/backend/src/main/java/com/example/backend/dto/PerformanceRequest.java
 /home/user/Development/java/backend/src/main/java/com/example/backend/security/SecurityConfig.java
+/home/user/Development/java/backend/src/main/java/com/example/backend/controller/PageController.java
 /home/user/Development/java/backend/src/main/java/com/example/backend/repository/ProjectRepository.java
 /home/user/Development/java/backend/src/main/java/com/example/backend/entity/Performance.java
 /home/user/Development/java/backend/src/main/java/com/example/backend/controller/ProjectController.java

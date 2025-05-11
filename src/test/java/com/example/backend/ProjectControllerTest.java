@@ -39,21 +39,17 @@ public class ProjectControllerTest {
     private UserRepository userRepository;
 
     @BeforeEach
-    void setupAdmin() {
+    void setupUser() {
         User adminUser = new User();
         adminUser.setUsername("admin");
         adminUser.setRoles(List.of("ROLE_USER", "ROLE_ADMIN"));
 
-        when(userRepository.findByUsername("admin"))
-            .thenReturn(Optional.of(adminUser));
-    }
-
-    @BeforeEach
-    void setupUser() {
         User user = new User();
         user.setUsername("user");
         user.setRoles(List.of("ROLE_USER"));
 
+        when(userRepository.findByUsername("admin"))
+            .thenReturn(Optional.of(adminUser));
         when(userRepository.findByUsername("user"))
             .thenReturn(Optional.of(user));
     }
