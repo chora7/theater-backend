@@ -47,3 +47,5 @@ Standard Backend Development Flow
     Enhance with Features (Token Refresh, Error Handling, etc.)
 
         Add polish (e.g., error handling, token refreshing, pagination).
+
+    Add Thymeleaf templates
