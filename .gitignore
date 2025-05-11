@@ -2,3 +2,4 @@
 .vscode
 .mvn
 export.sh
+run_jar.sh
