@@ -15,7 +15,7 @@ FROM openjdk:21-jdk-slim
 # set the container working directory
 WORKDIR /app
 
-COPY --from=build target/*.jar app.jar
+COPY --from=build /app/target/*.jar app.jar
 
 EXPOSE 8080
 
