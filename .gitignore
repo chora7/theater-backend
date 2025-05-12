@@ -1,1 +1,7 @@
 .env
+.vscode
+.mvn
+export.sh
+run_jar.sh
+generatedSchema.sql
+HELP.md
