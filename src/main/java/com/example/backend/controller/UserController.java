@@ -27,7 +27,7 @@ public class UserController {
             User newUser = service.register(user, isAdmin);
             return ResponseEntity.status(HttpStatus.CREATED).body(new ApiResponse("New user created", newUser));
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ApiResponse("Error creating user", user));
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ApiResponse("Error creating user", e.getMessage()));
         }
     }
 }

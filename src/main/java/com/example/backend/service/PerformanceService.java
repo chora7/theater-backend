@@ -16,6 +16,8 @@ import com.example.backend.repository.PerformanceRepository;
 import com.example.backend.repository.ProjectRepository;
 import com.example.backend.repository.UserRepository;
 
+import jakarta.transaction.Transactional;
+
 @Service
 public class PerformanceService {
     
@@ -49,6 +51,7 @@ public class PerformanceService {
         return repository.findByUser(user);
     }
 
+    @Transactional
     public Performance assignUserToProject (Long userId, Long projectId, String role,
                                             String specialization, PerformanceStatus status) {
                                                 

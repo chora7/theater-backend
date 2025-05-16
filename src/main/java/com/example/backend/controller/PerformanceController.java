@@ -23,8 +23,6 @@ import com.example.backend.exception.ResourceNotFoundException;
 import com.example.backend.repository.UserRepository;
 import com.example.backend.service.PerformanceService;
 
-import jakarta.transaction.Transactional;
-
 @RestController
 @RequestMapping("/api/performances")
 public class PerformanceController {
@@ -47,7 +45,6 @@ public class PerformanceController {
 
     @PostMapping("/assign")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    @Transactional
     public ResponseEntity<?> assignUserToProject(@RequestBody PerformanceRequest request) {
         try {
             Performance performance = service.assignUserToProject(

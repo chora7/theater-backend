@@ -13,8 +13,6 @@ import com.example.backend.dto.ApiResponse;
 import com.example.backend.entity.Project;
 import com.example.backend.service.ProjectService;
 
-import jakarta.transaction.Transactional;
-
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -51,7 +49,6 @@ public class ProjectController {
     
     @PostMapping
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    @Transactional
     public ResponseEntity<?> create (@RequestBody Project project) {
         try {
             Project newProject = service.create(project);
@@ -63,7 +60,6 @@ public class ProjectController {
 
     @PostMapping("/{projectId}/assign/{userId}")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    @Transactional
     public ResponseEntity<?> assignUserToProject(@PathVariable Long projectId, @PathVariable Long userId) {
         try {
             service.assignUserToProject(projectId, userId);

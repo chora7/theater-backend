@@ -18,6 +18,8 @@ import com.example.backend.repository.PerformanceRepository;
 import com.example.backend.repository.ProjectRepository;
 import com.example.backend.repository.UserRepository;
 
+import jakarta.transaction.Transactional;
+
 @Service
 public class ProjectService {
     
@@ -69,10 +71,12 @@ public class ProjectService {
         return project;
     }
 
+    @Transactional
     public Project create (Project project) {
         return repository.save(project);
     }
 
+    @Transactional
     public void assignUserToProject (Long projectId, Long userId) {
         Project project = repository.findById(projectId)
             .orElseThrow(() -> new ResourceNotFoundException("Project not found"));
