@@ -62,10 +62,10 @@ public class PerformanceController {
 
     @GetMapping("/{id}")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public ResponseEntity<ApiResponse> getAllPerformancesForAdmin () {
+    public ResponseEntity<ApiResponse> getPerformancesById (@PathVariable Long id) {
         try {
-            List<Performance> allPerformances = service.getAllPerformancesForAdmin();
-            return ResponseEntity.ok(new ApiResponse("Successfully returned all performances for ROLE_ADMIN", allPerformances));
+            Performance performance = service.getPerformanceById(id);
+            return ResponseEntity.ok(new ApiResponse("Successfully returned performance with id " + id, performance));
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ApiResponse("Error fetching performances", e.getMessage()));
         }

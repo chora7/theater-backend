@@ -13,6 +13,9 @@ import com.example.backend.entity.User;
 @Repository
 public interface PerformanceRepository extends JpaRepository<Performance, PerformanceId> {
 
+    // find performance for given id
+    Performance findById(Long id);
+
     // find performances by user id
     List<Performance> findByUser_Id(Long userId);
 

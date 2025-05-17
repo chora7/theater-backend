@@ -62,6 +62,6 @@ public class User {
     }
 
     public boolean hasRole(String role) {
-        return getRoles().contains("ROLE_" + role);
+        return getRoles().contains(role);
     }
 }

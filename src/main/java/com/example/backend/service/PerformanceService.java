@@ -41,7 +41,7 @@ public class PerformanceService {
         User user = userRepository.findByUsername(username)
             .orElseThrow(() -> new ResourceNotFoundException("User not found"));
 
-        if (user.hasRole("ADMIN")) {
+        if (user.hasRole("ROLE_ADMIN")) {
             System.out.println("Admin fetching all performances");
             return repository.findAll();
         }
@@ -90,7 +90,7 @@ public class PerformanceService {
         return repository.findByProject_Id(projectId);
     }
 
-    public List<Performance> getAllPerformancesForAdmin () {
-        return repository.findAll();
+    public Performance getPerformanceById (Long id) {
+        return repository.findById(id);
     }
 }
