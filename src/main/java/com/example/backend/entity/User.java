@@ -1,5 +1,6 @@
 package com.example.backend.entity;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -45,8 +46,12 @@ public class User {
     private List<Performance> performances;
 
     public List<String> getRoles() {
-        if (roles == null && rolesString != null) {
-            roles = Arrays.asList(rolesString.split(","));
+        if (roles == null) {
+            if (rolesString != null && !rolesString.isBlank()) {
+                roles = Arrays.asList(rolesString.split(","));
+            } else {
+                roles = new ArrayList<>();
+            }
         }
         return roles;
     }
@@ -57,6 +62,6 @@ public class User {
     }
 
     public boolean hasRole(String role) {
-        return roles.contains("ROLE_" + role);
+        return getRoles().contains("ROLE_" + role);
     }
 }

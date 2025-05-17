@@ -1,8 +1,11 @@
 package com.example.backend.controller;
 
 import java.util.List;
+import java.util.Locale;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -10,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.backend.dto.ApiResponse;
+import com.example.backend.dto.LocalizeProject;
 import com.example.backend.entity.Project;
 import com.example.backend.service.ProjectService;
 
@@ -26,12 +30,18 @@ import org.springframework.web.bind.annotation.PutMapping;
 public class ProjectController {
 
     @Autowired private ProjectService service;
+    @Autowired private MessageSource messageSource;
 
     @GetMapping
-    public ResponseEntity<?> listAll () {
+    public ResponseEntity<?> listAll (Locale locale) {
         try {
             List<Project> allProjects = service.getAllForCurrentUser();
-            return ResponseEntity.ok(new ApiResponse("Successfully fetched all projects", allProjects));
+
+            List<LocalizeProject> localizedProjects = allProjects.stream()
+                                                .map(p -> new LocalizeProject(p, messageSource, locale))
+                                                .collect(Collectors.toList());
+
+            return ResponseEntity.ok(new ApiResponse("Successfully fetched all projects", localizedProjects));
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ApiResponse("Error fetching projects", e.getMessage()));
         }
