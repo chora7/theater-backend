@@ -1,9 +1,13 @@
 package com.example.backend.entity;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -27,14 +31,11 @@ public class User {
     private Long id;
     @Column(name = "username")
     private String username;
-    @Column(name = "password")
+    @Column(name = "password", length = 255)
     private String password;
 
     @Column(name = "roles")
     private String rolesString;
-
-    @Transient
-    private List<String> roles;
 
     @JsonIgnore
     @ManyToMany(mappedBy = "assignedUsers")
@@ -44,19 +45,23 @@ public class User {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Performance> performances;
 
-    public List<String> getRoles() {
-        if (roles == null && rolesString != null) {
-            roles = Arrays.asList(rolesString.split(","));
-        }
-        return roles;
-    }
-
     public void setRoles(List<String> roles) {
-        this.roles = roles;
         this.rolesString =  String.join(",", roles);
     }
 
+    @JsonProperty("roles")
+    public List<String> getRoles() {
+        if (rolesString == null || rolesString.isBlank()) {
+            return new ArrayList<>();
+        }
+
+        return Arrays.stream(rolesString.split(","))
+                     .map(String::trim)
+                     .filter(s -> !s.isEmpty())
+                     .collect(Collectors.toList());
+    }
+
     public boolean hasRole(String role) {
-        return roles.contains("ROLE_" + role);
+        return getRoles().contains(role);
     }
 }

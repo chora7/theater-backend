@@ -12,6 +12,6 @@ INSERT INTO location (country, city, address, description) VALUES
 ('Hrvatska', 'Split', 'Obala hrvatskog narodnog preporoda 25', 'Otvorena pozornica uz more za ljetne predstave.');
 
 INSERT INTO project (title, description, visible, status, start_date, end_date, location_id) VALUES
-('Kazališna sezona 2025', 'Otvaranje nove kazališne sezone s nizom premijera.', true, 'U tijeku', '2025-09-01', '2025-12-15', 1),
-('Festival alternativnog teatra', 'Međunarodni festival s eksperimentalnim predstavama.', true, 'Planirano', '2025-06-10', '2025-06-20', 2),
-('Obnova scene', 'Renovacija glavne pozornice i rasvjete.', false, 'Završeno', '2024-01-15', '2024-06-30', 3);
+('Kazališna sezona 2025', 'Otvaranje nove kazališne sezone s nizom premijera.', true, 'IN_PROGRESS', '2025-09-01', '2025-12-15', 1),
+('Festival alternativnog teatra', 'Međunarodni festival s eksperimentalnim predstavama.', true, 'PLANNED', '2025-06-10', '2025-06-20', 2),
+('Obnova scene', 'Renovacija glavne pozornice i rasvjete.', false, 'COMPLETED', '2024-01-15', '2024-06-30', 3);

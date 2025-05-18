@@ -14,6 +14,8 @@ import com.example.backend.exception.ResourceNotFoundException;
 import com.example.backend.repository.DepartmentRepository;
 import com.example.backend.repository.UserRepository;
 
+import jakarta.transaction.Transactional;
+
 @Service
 public class DepartmentService {
     
@@ -28,12 +30,13 @@ public class DepartmentService {
             .orElseThrow(() -> new ResourceNotFoundException("User not found"));
 
         if (user.getRoles().contains("ROLE_ADMIN")) {
-            return repository.findAll();
+            return repository.findAllWithUsers();
         }
 
         return repository.findByAssignedUsersContaining(user);
     }
 
+    @Transactional
     public Department getById (Long id) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String username = auth.getName();
@@ -54,11 +57,13 @@ public class DepartmentService {
         return department;
     }
 
+    @Transactional
     public Department create (Department department) {
         return repository.save(department);
     }
 
-    public void assignUserToDepartment (Long departmentId, Long userId) {
+    @Transactional
+    public void assignDepartmentToUser (Long departmentId, Long userId) {
         Department department = repository.findById(departmentId)
             .orElseThrow(() -> new ResourceNotFoundException("Department not found"));
         User user = userRepository.findById(userId)

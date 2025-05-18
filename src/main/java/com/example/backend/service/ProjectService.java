@@ -18,6 +18,8 @@ import com.example.backend.repository.PerformanceRepository;
 import com.example.backend.repository.ProjectRepository;
 import com.example.backend.repository.UserRepository;
 
+import jakarta.transaction.Transactional;
+
 @Service
 public class ProjectService {
     
@@ -37,7 +39,7 @@ public class ProjectService {
         User user = userRepository.findByUsername(username)
             .orElseThrow(() -> new ResourceNotFoundException("User not found"));
 
-        if (user.hasRole("ADMIN")) {
+        if (user.hasRole("ROLE_ADMIN")) {
             System.out.println("Admin fetching all projects");
             return repository.findAll();
         }
@@ -57,7 +59,7 @@ public class ProjectService {
         Project project = repository.findById(id)
             .orElseThrow(() -> new ResourceNotFoundException("Project not found"));
 
-        if (user.hasRole("ADMIN")) {
+        if (user.hasRole("ROLE_ADMIN")) {
             return project;
         }
 
@@ -69,11 +71,13 @@ public class ProjectService {
         return project;
     }
 
+    @Transactional
     public Project create (Project project) {
         return repository.save(project);
     }
 
-    public void assignUserToProject (Long projectId, Long userId) {
+    @Transactional
+    public void assignProjectToUser (Long projectId, Long userId) {
         Project project = repository.findById(projectId)
             .orElseThrow(() -> new ResourceNotFoundException("Project not found"));
         User user = userRepository.findById(userId)
