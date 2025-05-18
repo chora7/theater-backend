@@ -9,8 +9,8 @@ create table department (
 
 create table users (
     id serial primary key,
-    username varchar(20),
-    password varchar(30),
+    username varchar(20) unique,
+    password varchar(255),
 
     roles varchar(20)
 );
@@ -28,13 +28,13 @@ create table location (
     id serial primary key,
     country varchar(80),
     city varchar(50),
-    address varchar(50),
+    address varchar(50) unique,
     description varchar(255)
 );
 
 create table project (
     id serial primary key,
-    title varchar(255) not null,
+    title varchar(255) not null unique,
     description text,
     visible boolean not null,
     status varchar(50),
