@@ -1,50 +1,42 @@
+# Database
 
-Standard Backend Development Flow
+<div align="center">
+  <img src="./schema.png" alt="schema" width="90%">
+</div>
 
-Design & Set Up Database
+# Anyone
+- register
+- login
+- logout
 
-    Define your entities (e.g., User, Role, Product, etc.).
+# ROLE_USER
+- view only projects assigned to them
+- view only performances they are on
+- view only departments assigned to them
 
-    Set up relationships (OneToMany, ManyToOne, etc.).
+# ROLE_ADMIN
+- view all departments
+- add new department
+- update existing department
+- delete existing department
+- assign department to user
 
-    Create schema using JPA/Hibernate or SQL.
+- view all locations
+- add new location
 
-Create Entity Classes & Repositories
+- view all existing projects
+- view single project
+- add new project
+- update existing project
+- assign project to user
+- delete project
 
-    Java classes mapped to database tables.
+- view all existing performances
+- assign user to project
+- update performance for user on project
+- view single performance for user on project
+- view all performances for user
+- view all performances on project
 
-    Repositories (using Spring Data JPA) for CRUD operations.
-
-Develop and Test Endpoints (with Postman)
-
-    Build REST APIs for each major entity (GET, POST, PUT, DELETE).
-
-    Test every endpoint individually using Postman:
-
-        Make sure data saves to DB.
-
-        Validate edge cases and bad input.
-
-        Ensure expected HTTP status codes.
-
-Implement Business Logic (Services)
-
-    Add any logic beyond basic CRUD.
-
-    Validate inputs, handle rules, call other services.
-
-Secure the APIs (JWT/Auth)
-
-    Once basic functionality is tested and stable, add authentication/authorization.
-
-    Use JWT, role checks, etc.
-
-Frontend Integration
-
-    Once backend endpoints are working and secure, integrate with frontend.
-
-    Frontend stores token, calls APIs.
-
-Enhance with Features (Token Refresh, Error Handling, etc.)
-
-    Add polish (e.g., error handling, token refreshing, pagination).
+# Extras
+- implement localization for hr (PerformanceStatus and ProjectStatus)

@@ -3,5 +3,6 @@
 .mvn
 export.sh
 run_jar.sh
+docker-run.sh
 generatedSchema.sql
 HELP.md

@@ -7,14 +7,18 @@
 /home/user/Development/java/backend/src/main/java/com/example/backend/BackendApplication.java
 /home/user/Development/java/backend/src/main/java/com/example/backend/dto/AuthResponse.java
 /home/user/Development/java/backend/src/main/java/com/example/backend/enums/PerformanceStatus.java
+/home/user/Development/java/backend/src/main/java/com/example/backend/config/MessageConfig.java
 /home/user/Development/java/backend/src/main/java/com/example/backend/service/CustomUserDetailsService.java
 /home/user/Development/java/backend/src/main/java/com/example/backend/exception/GlobalExceptionHandler.java
+/home/user/Development/java/backend/src/main/java/com/example/backend/exception/UserAlreadyExists.java
+/home/user/Development/java/backend/src/main/java/com/example/backend/dto/LocalizeProject.java
 /home/user/Development/java/backend/src/main/java/com/example/backend/entity/PerformanceId.java
 /home/user/Development/java/backend/src/main/java/com/example/backend/entity/Department.java
 /home/user/Development/java/backend/src/main/java/com/example/backend/entity/User.java
 /home/user/Development/java/backend/src/main/java/com/example/backend/service/TokenBlacklistService.java
 /home/user/Development/java/backend/src/main/java/com/example/backend/service/DepartmentService.java
 /home/user/Development/java/backend/src/main/java/com/example/backend/entity/Location.java
+/home/user/Development/java/backend/src/main/java/com/example/backend/dto/PerformanceUpdateRequest.java
 /home/user/Development/java/backend/src/main/java/com/example/backend/dto/AuthRequest.java
 /home/user/Development/java/backend/src/main/java/com/example/backend/exception/ResourceNotFoundException.java
 /home/user/Development/java/backend/src/main/java/com/example/backend/service/ProjectService.java
@@ -26,6 +30,7 @@
 /home/user/Development/java/backend/src/main/java/com/example/backend/repository/UserRepository.java
 /home/user/Development/java/backend/src/main/java/com/example/backend/security/JwtUtil.java
 /home/user/Development/java/backend/src/main/java/com/example/backend/dto/PerformanceRequest.java
+/home/user/Development/java/backend/src/main/java/com/example/backend/dto/DepartmentRequest.java
 /home/user/Development/java/backend/src/main/java/com/example/backend/security/SecurityConfig.java
 /home/user/Development/java/backend/src/main/java/com/example/backend/controller/PageController.java
 /home/user/Development/java/backend/src/main/java/com/example/backend/repository/ProjectRepository.java
@@ -34,5 +39,6 @@
 /home/user/Development/java/backend/src/main/java/com/example/backend/dto/ApiResponse.java
 /home/user/Development/java/backend/src/main/java/com/example/backend/exception/CustomAccessDeniedException.java
 /home/user/Development/java/backend/src/main/java/com/example/backend/controller/PerformanceController.java
+/home/user/Development/java/backend/src/main/java/com/example/backend/dto/DepartmentInfo.java
 /home/user/Development/java/backend/src/main/java/com/example/backend/service/PerformanceService.java
 /home/user/Development/java/backend/src/main/java/com/example/backend/controller/LocationController.java
