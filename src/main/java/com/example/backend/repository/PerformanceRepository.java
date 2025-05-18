@@ -1,6 +1,7 @@
 package com.example.backend.repository;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -14,7 +15,7 @@ import com.example.backend.entity.User;
 public interface PerformanceRepository extends JpaRepository<Performance, PerformanceId> {
 
     // find performance for given id
-    Performance findById(Long id);
+    //Performance findById(PerformanceId id);
 
     // find performances by user id
     List<Performance> findByUser_Id(Long userId);

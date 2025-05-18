@@ -29,6 +29,7 @@ public class UserService {
         } else {
             user.setRoles(List.of("ROLE_USER"));
         }
+        // user.getRoles(); // triggers parsing from rolesString
         return repo.save(user);
     }
 }

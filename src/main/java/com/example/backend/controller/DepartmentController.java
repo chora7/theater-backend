@@ -24,8 +24,6 @@ import com.example.backend.entity.User;
 import com.example.backend.repository.UserRepository;
 import com.example.backend.service.DepartmentService;
 
-import jakarta.transaction.Transactional;
-
 @RestController
 @RequestMapping("/api/departments")
 public class DepartmentController {
@@ -86,9 +84,9 @@ public class DepartmentController {
 
     @PostMapping("/{departmentId}/assign/{userId}")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public ResponseEntity<?> assignUserToDepartment(@PathVariable Long departmentId, @PathVariable Long userId) {
+    public ResponseEntity<?> assignDepartmentToUser(@PathVariable Long departmentId, @PathVariable Long userId) {
         try {
-            service.assignUserToDepartment(departmentId, userId);
+            service.assignDepartmentToUser(departmentId, userId);
             return ResponseEntity.ok(new ApiResponse("User assigned to department", userId));
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ApiResponse("Could not assigne user to department", e.getMessage()));

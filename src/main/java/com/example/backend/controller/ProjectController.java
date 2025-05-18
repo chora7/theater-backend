@@ -70,9 +70,10 @@ public class ProjectController {
 
     @PostMapping("/{projectId}/assign/{userId}")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public ResponseEntity<?> assignUserToProject(@PathVariable Long projectId, @PathVariable Long userId) {
+    public ResponseEntity<?> assignProjectToUser (@PathVariable Long projectId,
+                                                 @PathVariable Long userId) {
         try {
-            service.assignUserToProject(projectId, userId);
+            service.assignProjectToUser(projectId, userId);
             return ResponseEntity.ok(new ApiResponse("Successfully assigned project to user",  null));
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ApiResponse("Error assigning project", e.getMessage()));

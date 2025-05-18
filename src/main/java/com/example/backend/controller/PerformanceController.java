@@ -11,13 +11,17 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.backend.dto.ApiResponse;
 import com.example.backend.dto.PerformanceRequest;
+import com.example.backend.dto.PerformanceUpdateRequest;
+import com.example.backend.entity.Department;
 import com.example.backend.entity.Performance;
+import com.example.backend.entity.PerformanceId;
 import com.example.backend.entity.User;
 import com.example.backend.exception.ResourceNotFoundException;
 import com.example.backend.repository.UserRepository;
@@ -60,12 +64,34 @@ public class PerformanceController {
         }
     }
 
-    @GetMapping("/{id}")
+    @PutMapping("/{userId}/{projectId}")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public ResponseEntity<ApiResponse> getPerformancesById (@PathVariable Long id) {
+    public ResponseEntity<?> update (@PathVariable Long userId,
+                                     @PathVariable Long projectId, 
+                                     @RequestBody PerformanceUpdateRequest request) {
+
         try {
-            Performance performance = service.getPerformanceById(id);
-            return ResponseEntity.ok(new ApiResponse("Successfully returned performance with id " + id, performance));
+
+            PerformanceId id = new PerformanceId(userId, projectId);
+            Performance updatedPerformance = service.update(id, request);
+
+            if (updatedPerformance != null) {
+                return ResponseEntity.ok(new ApiResponse("Performance updated", updatedPerformance));
+            } else {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ApiResponse("Performance not found", updatedPerformance));
+            }
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ApiResponse("Error retrieving performance", e.getMessage()));
+        }
+    }
+
+    @GetMapping("/{userId}/{projectId}")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public ResponseEntity<ApiResponse> getPerformancesById (@PathVariable Long userId,
+                                                            @PathVariable Long projectId) {
+        try {
+            Performance performance = service.getPerformanceById(new PerformanceId(userId,projectId));
+            return ResponseEntity.ok(new ApiResponse("Successfully returned performance based on user ID and project ID", performance));
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ApiResponse("Error fetching performances", e.getMessage()));
         }

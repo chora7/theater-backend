@@ -63,7 +63,7 @@ public class DepartmentService {
     }
 
     @Transactional
-    public void assignUserToDepartment (Long departmentId, Long userId) {
+    public void assignDepartmentToUser (Long departmentId, Long userId) {
         Department department = repository.findById(departmentId)
             .orElseThrow(() -> new ResourceNotFoundException("Department not found"));
         User user = userRepository.findById(userId)

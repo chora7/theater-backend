@@ -6,6 +6,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import com.example.backend.dto.PerformanceUpdateRequest;
 import com.example.backend.entity.Performance;
 import com.example.backend.entity.PerformanceId;
 import com.example.backend.entity.Project;
@@ -42,7 +43,7 @@ public class PerformanceService {
             .orElseThrow(() -> new ResourceNotFoundException("User not found"));
 
         if (user.hasRole("ROLE_ADMIN")) {
-            System.out.println("Admin fetching all performances");
+            System.out.println("Admin fetching all performances for ROLE_ADMIN");
             return repository.findAll();
         }
 
@@ -78,6 +79,18 @@ public class PerformanceService {
         return repository.save(performance);
     }
 
+    @Transactional
+    public Performance update (PerformanceId id, PerformanceUpdateRequest updated) {
+        Performance existing = repository.findById(id)
+                    .orElseThrow(() -> new ResourceNotFoundException("Performance not found"));
+
+        existing.setRole(updated.getRole());
+        existing.setSpecialization(updated.getSpecialization());
+        existing.setStatus(updated.getStatus());
+
+        return repository.save(existing);
+    }
+
     public boolean isUserAssignedToProject (Long userId, Long projectId) {
         return repository.existsByUser_IdAndProject_Id(userId, userId);
     }
@@ -90,7 +103,7 @@ public class PerformanceService {
         return repository.findByProject_Id(projectId);
     }
 
-    public Performance getPerformanceById (Long id) {
-        return repository.findById(id);
+    public Performance getPerformanceById (PerformanceId id) {
+        return repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Performance not found"));
     }
 }

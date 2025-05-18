@@ -1,11 +1,14 @@
 package com.example.backend.security;
 
+import java.net.http.HttpRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -17,50 +20,38 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+import com.example.backend.service.CustomUserDetailsService;
+
 @Configuration
 @EnableWebSecurity
-@EnableMethodSecurity(prePostEnabled = true)
+@EnableMethodSecurity
 public class SecurityConfig {
-    
+
     @Autowired private JwtRequestFilter jwtRequestFilter;
+    @Autowired private CustomUserDetailsService userDetailsService;
 
-    @Autowired private UserDetailsService userDetailsService;
-
+    // 1.  AuthenticationManager that knows about your users
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http.csrf(csrf -> csrf.disable())
-            .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/auth/**", "/login", "/register", "/css/**", "/js/**").permitAll()
+    public AuthenticationManager authManager(HttpSecurity http) throws Exception {
+        return http.getSharedObject(AuthenticationManagerBuilder.class)
+                   .userDetailsService(userDetailsService)
+                   .passwordEncoder(passwordEncoder())
+                   .and()
+                   .build();
+    }
+
+    // 2.  Stateless filter chain for /api/**
+    @Bean
+    public SecurityFilterChain apiChain(HttpSecurity http) throws Exception {
+        http
+          .csrf(csrf -> csrf.disable())
+          .sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+          .authorizeHttpRequests(auth -> auth
+                .requestMatchers("/auth/**").permitAll()
                 .requestMatchers("/api/**").authenticated()
-                .anyRequest().authenticated())
-            .sessionManagement(sess -> sess
-                .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED))
-            .formLogin(form -> form
-                .loginPage("/login")
-                .defaultSuccessUrl("/dashboard", true)
-                .permitAll()
-            ).logout(logout -> logout
-                .logoutUrl("/logout")
-                .logoutSuccessUrl("/login?logout")
-                .permitAll())
-            .authenticationProvider(authenticationProvider());
-
-            http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
-
-            return http.build();
-    }
-
-    @Bean
-    public AuthenticationManager authenticationManager (AuthenticationConfiguration config) throws Exception {
-        return config.getAuthenticationManager();
-    }
-
-    @Bean
-    public AuthenticationProvider authenticationProvider () {
-        DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
-        provider.setUserDetailsService(userDetailsService);
-        provider.setPasswordEncoder(passwordEncoder());
-        return provider;
+                .anyRequest().permitAll())
+          .addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
+        return http.build();
     }
 
     @Bean
@@ -68,3 +59,4 @@ public class SecurityConfig {
         return new BCryptPasswordEncoder();
     }
 }
+

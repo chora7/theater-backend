@@ -2,9 +2,12 @@ package com.example.backend.entity;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -34,9 +37,6 @@ public class User {
     @Column(name = "roles")
     private String rolesString;
 
-    @Transient
-    private List<String> roles;
-
     @JsonIgnore
     @ManyToMany(mappedBy = "assignedUsers")
     private List<Department> assignedDepartments;
@@ -45,20 +45,20 @@ public class User {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Performance> performances;
 
-    public List<String> getRoles() {
-        if (roles == null) {
-            if (rolesString != null && !rolesString.isBlank()) {
-                roles = Arrays.asList(rolesString.split(","));
-            } else {
-                roles = new ArrayList<>();
-            }
-        }
-        return roles;
+    public void setRoles(List<String> roles) {
+        this.rolesString =  String.join(",", roles);
     }
 
-    public void setRoles(List<String> roles) {
-        this.roles = roles;
-        this.rolesString =  String.join(",", roles);
+    @JsonProperty("roles")
+    public List<String> getRoles() {
+        if (rolesString == null || rolesString.isBlank()) {
+            return new ArrayList<>();
+        }
+
+        return Arrays.stream(rolesString.split(","))
+                     .map(String::trim)
+                     .filter(s -> !s.isEmpty())
+                     .collect(Collectors.toList());
     }
 
     public boolean hasRole(String role) {
