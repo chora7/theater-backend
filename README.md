@@ -1,9 +1,3 @@
-# Database
-
-<div align="center">
-  <img src="./schema.png" alt="schema" width="90%">
-</div>
-
 # Anyone
 - register
 - login

@@ -6,3 +6,7 @@ run_jar.sh
 docker-run.sh
 generatedSchema.sql
 HELP.md
+schema.png
+acctualSchema.sql
+src/main/resources/db/migration/V1__init.sql
+src/main/resources/db/migration/V2__insert_initial_data.sql
