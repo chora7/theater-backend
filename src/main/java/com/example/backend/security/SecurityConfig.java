@@ -29,6 +29,7 @@ public class SecurityConfig {
 
     @Autowired private JwtRequestFilter jwtRequestFilter;
     @Autowired private CustomUserDetailsService userDetailsService;
+    @Autowired private RoleBasedAuthSuccessHandler roleBasedAuthSuccessHandler;
 
     // 1.  AuthenticationManager that knows about your users
     @Bean
@@ -47,6 +48,7 @@ public class SecurityConfig {
             .csrf(csrf -> csrf.disable())
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers("/auth/**", "/login", "/register", "/css/**", "/js/**").permitAll()
+                .requestMatchers("/admin/**").hasRole("ADMIN")
                 .requestMatchers("/api/**").authenticated()
                 .anyRequest().authenticated()
             )
@@ -55,7 +57,7 @@ public class SecurityConfig {
             )
             .formLogin(form -> form
                 .loginPage("/login")
-                .defaultSuccessUrl("/dashboard", true)
+                .successHandler(roleBasedAuthSuccessHandler)
                 .permitAll()
             )
             .logout(logout -> logout

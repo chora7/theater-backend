@@ -9,6 +9,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.transaction.annotation.Transactional;
 
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -27,6 +28,7 @@ import com.example.backend.repository.UserRepository;
 
 @SpringBootTest
 @AutoConfigureMockMvc
+@Transactional
 public class ProjectControllerTest {
 
     @Autowired
@@ -68,7 +70,7 @@ public class ProjectControllerTest {
             .contentType(MediaType.APPLICATION_JSON)
             .content(objectMapper.writeValueAsString(project)))
             .andExpect(status().isOk())
-            .andExpect(jsonPath("$.title").value("Test Project"));
+            .andExpect(jsonPath("$.data.title").value("Test Project"));
 	}
 
     /* add project as a 'ROLE_USER' and fail */
@@ -91,6 +93,6 @@ public class ProjectControllerTest {
     void whenAdminGetsAllProjects_thenSeesAll() throws Exception {
         mockMvc.perform(get("/api/projects"))
             .andExpect(status().isOk())
-            .andExpect(jsonPath("$").isArray());
+            .andExpect(jsonPath("$.data").isArray());
     }
 }

@@ -4,11 +4,19 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.security.authorization.AuthorizationDeniedException;
+import java.util.Map;
 
 /* ovdje upravljamo status kodovima iznimki */
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
+
+    @ExceptionHandler(AuthorizationDeniedException.class)
+    public ResponseEntity<?> handleAuthDenied(AuthorizationDeniedException ex) {
+        return ResponseEntity.status(HttpStatus.FORBIDDEN)
+            .body(Map.of("message", "Access Denied"));
+    }
 
     @ExceptionHandler(ResourceNotFoundException.class)
     public ResponseEntity<?> handleNotFound (ResourceNotFoundException ex) {

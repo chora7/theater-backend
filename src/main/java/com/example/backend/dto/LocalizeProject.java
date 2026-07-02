@@ -1,12 +1,9 @@
+/* example.backend.dto.LocalizeProject.java */
 package com.example.backend.dto;
-
 import java.time.LocalDate;
 import java.util.Locale;
-
 import org.springframework.context.MessageSource;
-
 import com.example.backend.entity.Project;
-
 import lombok.Data;
 
 @Data
@@ -25,7 +22,7 @@ public class LocalizeProject {
         this.id = project.getId();
         this.title = project.getTitle();
         this.description = project.getDescription();
-        this.status = project.getStatus().name(); // use enum name as String
+        this.status = project.getStatus() != null ? project.getStatus().name() : null;
         this.localizedStatus = project.getStatus().getLocalized(messageSource, locale);
         this.visible = project.isVisible();
         this.startDate = project.getStartDate();

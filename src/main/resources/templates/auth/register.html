@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Register</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}" />
+</head>
+<body>
+    <div>
+        <h2>Create an Account</h2>
+
+        <p th:if="${error}" th:text="${error}" style="color:red;"></p>
+
+        <form th:action="@{/register}" method="post" th:object="${user}">
+            <label>Username:
+                <input type="text" th:field="*{username}" required minlength="3" />
+            </label><br/>
+
+            <label>Password:
+                <input type="password" th:field="*{password}" required minlength="8"
+                       pattern="(?=.*[A-Za-z]).{8,}"
+                       title="At least 8 characters, must include at least one letter (not only numbers)." />
+            </label><br/>
+
+            <label>
+                <input type="checkbox" name="isAdmin" value="true" /> Register as admin
+            </label><br/>
+
+            <button type="submit">Register</button>
+        </form>
+
+        <p><a th:href="@{/login}">Already have an account? Login</a></p>
+    </div>
+</body>
+</html>

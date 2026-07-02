@@ -14,6 +14,9 @@
         </form>
         <p th:if="${param.error}">Invalid credentials.</p>
         <p th:if="${param.logout}">You have been logged out.</p>
+        <p th:if="${param.registered}">Account created — please log in.</p>
+
+        <p>Don't have an account? <a th:href="@{/register}">Register here</a></p>
     </div>
 </body>
 </html>

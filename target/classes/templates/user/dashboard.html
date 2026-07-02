@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{layout/fragments :: head('My Dashboard')}"></head>
+<body>
+    <nav th:replace="~{layout/fragments :: navbar}"></nav>
+
+    <div>
+        <h1>Welcome, <span th:text="${username}"></span>!</h1>
+        <p>This is your dashboard.</p>
+    </div>
+
+    <footer th:replace="~{layout/fragments :: footer}"></footer>
+</body>
+</html>
