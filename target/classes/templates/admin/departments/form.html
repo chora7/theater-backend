@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{layout/fragments :: head(${department.id} != null ? 'Edit Department' : 'Add Department')}"></head>
+<body>
+    <nav th:replace="~{layout/fragments :: navbar}"></nav>
+
+    <main>
+        <h1 th:text="${department.id} != null ? 'Edit Department' : 'Add New Department'"></h1>
+
+        <p th:if="${error}" th:text="${error}" class="alert alert-error"></p>
+
+        <form th:action="${department.id} != null
+                  ? @{/admin/departments/{id}/edit(id=${department.id})}
+                  : @{/admin/departments/new}"
+              method="post" th:object="${department}">
+
+            <input type="hidden" th:if="${department.id} != null" th:field="*{id}" />
+
+            <label>Name:
+                <input type="text" th:field="*{name}" required />
+            </label><br/>
+
+            <label>Category:
+                <input type="text" th:field="*{category}" />
+            </label><br/>
+
+            <button type="submit" th:text="${department.id} != null ? 'Update Department' : 'Create Department'"></button>
+        </form>
+
+        <p><a th:href="@{/admin/departments/list}">Back to Departments</a></p>
+    </main>
+
+    <footer th:replace="~{layout/fragments :: footer}"></footer>
+</body>
+</html>

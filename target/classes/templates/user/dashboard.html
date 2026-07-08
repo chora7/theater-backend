@@ -4,10 +4,10 @@
 <body>
     <nav th:replace="~{layout/fragments :: navbar}"></nav>
 
-    <div>
+    <main>
         <h1>Welcome, <span th:text="${username}"></span>!</h1>
         <p>This is your dashboard.</p>
-    </div>
+    </main>
 
     <footer th:replace="~{layout/fragments :: footer}"></footer>
 </body>

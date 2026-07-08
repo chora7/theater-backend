@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{layout/fragments :: head('Performances')}"></head>
+<body>
+    <nav th:replace="~{layout/fragments :: navbar}"></nav>
+
+    <main>
+        <h1>Performances</h1>
+
+        <p th:if="${param.updated}" class="alert alert-success">Performance updated successfully.</p>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>User</th>
+                    <th>Project</th>
+                    <th>Role</th>
+                    <th>Specialization</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="perf : ${performances}">
+                    <td th:text="${perf.user.username}"></td>
+                    <td th:text="${perf.project.title}"></td>
+                    <td th:text="${perf.role}"></td>
+                    <td th:text="${perf.specialization}"></td>
+                    <td th:text="${perf.status}"></td>
+                    <td>
+                        <a th:href="@{/admin/performances/{userId}/{projectId}/edit(userId=${perf.user.id}, projectId=${perf.project.id})}">Edit</a>
+                    </td>
+                </tr>
+                <tr th:if="${#lists.isEmpty(performances)}">
+                    <td colspan="6">No performances found.</td>
+                </tr>
+            </tbody>
+        </table>
+    </main>
+
+    <footer th:replace="~{layout/fragments :: footer}"></footer>
+</body>
+</html>

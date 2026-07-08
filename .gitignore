@@ -1,4 +1,5 @@
 .env
+.vim
 .vscode
 .mvn
 export.sh

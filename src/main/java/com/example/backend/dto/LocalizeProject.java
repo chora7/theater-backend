@@ -23,7 +23,9 @@ public class LocalizeProject {
         this.title = project.getTitle();
         this.description = project.getDescription();
         this.status = project.getStatus() != null ? project.getStatus().name() : null;
-        this.localizedStatus = project.getStatus().getLocalized(messageSource, locale);
+        this.localizedStatus = project.getStatus() != null
+                ? project.getStatus().getLocalized(messageSource, locale)
+                : null;
         this.visible = project.isVisible();
         this.startDate = project.getStartDate();
         this.endDate = project.getEndDate();

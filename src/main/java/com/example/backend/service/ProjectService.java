@@ -20,6 +20,8 @@ import com.example.backend.repository.UserRepository;
 
 import jakarta.transaction.Transactional;
 
+import com.example.backend.enums.ProjectStatus;
+
 @Service
 public class ProjectService {
     
@@ -73,6 +75,9 @@ public class ProjectService {
 
     @Transactional
     public Project create (Project project) {
+        if (project.getStatus() == null) {
+            project.setStatus(ProjectStatus.PLANNED); // or whatever your default should be
+        }
         return repository.save(project);
     }
 
@@ -101,6 +106,7 @@ public class ProjectService {
         existing.setVisible(updated.isVisible());
         existing.setStartDate(updated.getStartDate());
         existing.setEndDate(updated.getEndDate());
+        existing.setStatus(updated.getStatus()); 
         return repository.save(existing);
     }
 

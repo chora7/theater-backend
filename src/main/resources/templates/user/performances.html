@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{layout/fragments :: head('My Performances')}"></head>
+<body>
+    <nav th:replace="~{layout/fragments :: navbar}"></nav>
+
+    <main>
+        <h1>My Performances</h1>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Project</th>
+                    <th>Role</th>
+                    <th>Specialization</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="perf : ${performances}">
+                    <td th:text="${perf.project.title}"></td>
+                    <td th:text="${perf.role}"></td>
+                    <td th:text="${perf.specialization}"></td>
+                    <td th:text="${perf.status}"></td>
+                </tr>
+                <tr th:if="${#lists.isEmpty(performances)}">
+                    <td colspan="4">You have no assigned performances yet.</td>
+                </tr>
+            </tbody>
+        </table>
+    </main>
+
+    <footer th:replace="~{layout/fragments :: footer}"></footer>
+</body>
+</html>

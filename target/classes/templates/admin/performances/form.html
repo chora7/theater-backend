@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{layout/fragments :: head('Edit Performance')}"></head>
+<body>
+    <nav th:replace="~{layout/fragments :: navbar}"></nav>
+
+    <main>
+        <h1>Edit Performance</h1>
+        <div th:replace="~{layout/fragments :: alerts}"></div>
+        <p>
+            User: <strong th:text="${performance.user.username}"></strong> —
+            Project: <strong th:text="${performance.project.title}"></strong>
+        </p>
+
+        <form th:action="@{/admin/performances/{userId}/{projectId}/edit(userId=${performance.user.id}, projectId=${performance.project.id})}"
+              method="post" th:object="${updateRequest}">
+
+            <label>Role:
+                <input type="text" th:field="*{role}" />
+            </label><br/>
+
+            <label>Specialization:
+                <input type="text" th:field="*{specialization}" />
+            </label><br/>
+
+            <label>Status:
+                <select th:field="*{status}">
+                    <option th:each="s : ${T(com.example.backend.enums.PerformanceStatus).values()}"
+                            th:value="${s}" th:text="${s}"></option>
+                </select>
+            </label><br/>
+
+            <button type="submit">Update Performance</button>
+        </form>
+
+        <p><a th:href="@{/admin/performances/list}">Back to Performances</a></p>
+    </main>
+
+    <footer th:replace="~{layout/fragments :: footer}"></footer>
+</body>
+</html>

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{layout/fragments :: head(${project.id} != null ? 'Edit Project' : 'Add Project')}"></head>
+<body>
+    <nav th:replace="~{layout/fragments :: navbar}"></nav>
+
+    <main>
+        <h1 th:text="${project.id} != null ? 'Edit Project' : 'Add New Project'"></h1>
+
+        <p th:if="${error}" th:text="${error}" class="alert alert-error"></p>
+
+        <form th:action="${project.id} != null
+                  ? @{/admin/projects/{id}/edit(id=${project.id})}
+                  : @{/admin/projects/new}"
+              method="post" th:object="${project}">
+
+            <input type="hidden" th:if="${project.id} != null" th:field="*{id}" />
+
+            <label>Title:
+                <input type="text" th:field="*{title}" required />
+            </label><br/>
+
+            <label>Description:
+                <textarea th:field="*{description}"></textarea>
+            </label><br/>
+
+            <label>Start Date:
+                <input type="date" th:field="*{startDate}" />
+            </label><br/>
+
+            <label>End Date:
+                <input type="date" th:field="*{endDate}" />
+            </label><br/>
+
+            <label>Status:
+                <select th:field="*{status}">
+                    <option th:each="s : ${T(com.example.backend.enums.ProjectStatus).values()}"
+                            th:value="${s}" th:text="${s}"></option>
+                </select>
+            </label><br/>
+
+            <label>
+                <input type="checkbox" th:field="*{visible}" /> Visible
+            </label><br/>
+
+            <button type="submit" th:text="${project.id} != null ? 'Update Project' : 'Create Project'"></button>
+        </form>
+
+        <p><a th:href="@{/admin/projects/list}">Back to Projects</a></p>
+    </main>
+
+    <footer th:replace="~{layout/fragments :: footer}"></footer>
+</body>
+</html>

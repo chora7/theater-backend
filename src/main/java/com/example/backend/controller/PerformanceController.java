@@ -108,7 +108,7 @@ public class PerformanceController {
             User currentUser = userRepository.findByUsername(username)
                 .orElseThrow(() -> new ResourceNotFoundException("User not found"));
 
-            if (!currentUser.hasRole("ADMIN") && currentUser.getId().equals(userId)) {
+            if (!currentUser.hasRole("ADMIN") && !currentUser.getId().equals(userId)) {
                 return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
             }
 

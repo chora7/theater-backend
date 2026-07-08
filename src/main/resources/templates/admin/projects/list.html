@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{layout/fragments :: head('All Projects')}"></head>
+<body>
+    <nav th:replace="~{layout/fragments :: navbar}"></nav>
+
+    <main>
+        <h1>All Projects</h1>
+        <p th:if="${param.created}" class="alert alert-success">Project created successfully.</p>
+        <p th:if="${param.updated}" class="alert alert-success">Project updated successfully.</p>
+        <p th:if="${param.deleted}" class="alert alert-success">Project deleted successfully.</p>
+        <p th:if="${param.assigned}" class="alert alert-success">User assigned successfully.</p>
+        <a th:href="@{/admin/projects/new}">+ Add New    Project</a>
+        <table>
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Description</th>
+                    <th>Status</th>
+                    <th>Visible</th>
+                    <th>Start Date</th>
+                    <th>End Date</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="project : ${projects}">
+                    <td th:text="${project.title}"></td>
+                    <td th:text="${project.description}"></td>
+                    <td th:text="${project.localizedStatus}"></td>
+                    <td th:text="${project.visible} ? 'Yes' : 'No'"></td>
+                    <td th:text="${project.startDate}"></td>
+                    <td th:text="${project.endDate}"></td>
+                    <td>
+                        <a th:href="@{/admin/projects/{id}/edit(id=${project.id})}">Edit</a>
+
+                        <form th:action="@{/admin/projects/{id}/delete(id=${project.id})}"
+                              method="post" style="display:inline;"
+                              onsubmit="return confirm('Delete this project?');">
+                            <button type="submit">Delete</button>
+                        </form>
+
+                        <form th:action="@{/admin/projects/{id}/assign(id=${project.id})}"
+                              method="post" style="display:inline;">
+                            <select name="userId" required>
+                                <option value="" disabled selected>Assign user...</option>
+                                <option th:each="u : ${allUsers}"
+                                        th:value="${u.id}"
+                                        th:text="${u.username}"></option>
+                            </select>
+                            <button type="submit">Assign</button>
+                        </form>
+                    </td>
+                <tr th:if="${#lists.isEmpty(projects)}">
+                    <td colspan="7">No projects found.</td>
+                </tr>
+            </tbody>
+        </table>
+    </main>
+
+    <footer th:replace="~{layout/fragments :: footer}"></footer>
+</body>
+</html>

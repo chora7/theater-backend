@@ -92,7 +92,7 @@ public class PerformanceService {
     }
 
     public boolean isUserAssignedToProject (Long userId, Long projectId) {
-        return repository.existsByUser_IdAndProject_Id(userId, userId);
+        return repository.existsByUser_IdAndProject_Id(userId, projectId);
     }
 
     public List<Performance> getPerformancesByUser (Long userId) {
