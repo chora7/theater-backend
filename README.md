@@ -1,3 +1,15 @@
+# TODO
+    - hosting: needs polishing after v1.0.
+    - o izradi:
+`Potrebno se dobro ubaciti u projekat radi filtriranja opcija ponuda i optimizacije.
+Za to trebaju biti neki specifični atributi u tablicama poput "type of performance"
+a tip projekta već imamo. Nadalje, korisnik mora biti označen kao neka vrsta glumca,
+statista ili drugo. Ograničiti se na to koliko se želi da projekt bude opširan.`
+    - razrada funkcionalnosti: Testirati i omogućiti testiranje svima koji pristupaju
+    repozitoriju (razvijati se samo može u profesionalnom okruženju, sam u sobi to je vrlo teško)
+
+<hr>
+
 # API Authentication <!-- (OAuth 2.0) -->
 - `Authorization: Bearer <token>`
 
